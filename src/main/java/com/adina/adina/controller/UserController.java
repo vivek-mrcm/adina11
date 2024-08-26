@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -30,5 +31,18 @@ public class UserController
 
 
     }
+    @GetMapping("/get/{id}")
+    public User getUser(@PathVariable Integer id)
+    {
+    return userService.getUser(id);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Void> updateUser(@PathVariable Integer id,@RequestBody User user)
+    {
+         userService.updateUser(id,user);
+         return ResponseEntity.noContent().build();
+
+    }
+
 
 }

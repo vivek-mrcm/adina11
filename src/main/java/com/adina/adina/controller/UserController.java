@@ -11,53 +11,58 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class UserController
-{
+public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/userList")
-    public List<User> getUserList()
-    {
-        List<User> user=userService.getUsers();
+    public List<User> getUserList() {
+        List<User> user = userService.getUsers();
         return user;
 
     }
+
     @PostMapping("/register")
-    public String registerUser(@RequestBody User user)
-    {
-         userService.createNewUser(user);
-         return "User Register........................";
+    public String registerUser(@RequestBody User user) {
+        userService.createNewUser(user);
+        return "User Register........................";
 
 
     }
+
     @GetMapping("/get/{id}")
-    public User getUser(@PathVariable Integer id)
-    {
-    return userService.getUser(id);
+    public User getUser(@PathVariable Integer id) {
+        return userService.getUser(id);
     }
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable Integer id,@RequestBody User user)
-    {
-         userService.updateUser(id,user);
-         return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        userService.updateUser(id, user);
+        return ResponseEntity.noContent().build();
 
     }
+
     @GetMapping("/login/{a}/{email}")
-    public String Login(@PathVariable String a,@PathVariable String email)
-    {
-        System.out.println("-------------->"+a+"      "+email);
+    public String Login(@PathVariable String a, @PathVariable String email) {
+        System.out.println("-------------->" + a + "      " + email);
 
         //User ugr=userService.findByEmail(email);
-        User user=userRepository.findByEmail(email);
-        System.out.println("----->"+user);
-        System.out.println("Ram Ram Bhai ji.................");
-        return "Login Successfully.....................................";
+        User user = userRepository.findByEmail(email);
+       // System.out.println("mmmm---->" + user.getEmail());
+        //String status = user.getEmail();
+        if (user != null) {
+            return "Login Successfully.....................................";
+
+        }
+        else {
+            return "Not Login";
+        }
 
 
     }
+
 
 
 }
